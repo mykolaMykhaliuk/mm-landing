@@ -7,6 +7,87 @@
 .skill-category {
     text-align: center;
     padding: var(--spacing-md);
+    position: relative;
+    overflow: visible;
+    animation: skillCardFadeIn 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.skill-category:nth-child(1) { animation-delay: 0.1s; }
+.skill-category:nth-child(2) { animation-delay: 0.2s; }
+.skill-category:nth-child(3) { animation-delay: 0.3s; }
+.skill-category:nth-child(4) { animation-delay: 0.4s; }
+.skill-category:nth-child(5) { animation-delay: 0.5s; }
+.skill-category:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes skillCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Orbiting particles around skill cards */
+.skill-category::before,
+.skill-category::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--color-accent-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.skill-category:hover::before,
+.skill-category:hover::after {
+    opacity: 1;
+}
+
+.skill-category:hover::before {
+    animation: orbit1 3s linear infinite;
+}
+
+.skill-category:hover::after {
+    animation: orbit2 3s linear infinite;
+}
+
+@keyframes orbit1 {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0deg) translateX(120px) rotate(0deg);
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(360deg) translateX(120px) rotate(-360deg);
+    }
+}
+
+@keyframes orbit2 {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(180deg) translateX(120px) rotate(-180deg);
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(540deg) translateX(120px) rotate(-540deg);
+    }
+}
+
+.skill-category:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+    border-color: rgba(99, 102, 241, 0.5);
 }
 
 .category-icon {
@@ -14,16 +95,53 @@
     margin-bottom: var(--spacing-sm);
     filter: grayscale(0.3);
     transition: all var(--transition-normal);
+    display: inline-block;
+    position: relative;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
 }
 
 .skill-category:hover .category-icon {
     filter: grayscale(0);
-    transform: scale(1.1);
+    transform: scale(1.2) rotate(360deg);
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+    animation: iconSpin 1s ease-in-out;
+}
+
+@keyframes iconSpin {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.3) rotate(180deg);
+    }
+    100% {
+        transform: scale(1.2) rotate(360deg);
+    }
 }
 
 .skill-category h3 {
     margin-bottom: var(--spacing-sm);
     font-size: 1.5rem;
+    position: relative;
+    background: linear-gradient(135deg, var(--color-text-primary), var(--color-accent-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+}
+
+.skill-category:hover h3 {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
 }
 
 .skill-list {
@@ -35,11 +153,61 @@
     color: var(--color-text-secondary);
     padding: 0.5rem 0;
     font-size: 1rem;
-    transition: color var(--transition-fast);
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.skill-list li:hover::before {
+    width: 100%;
 }
 
 .skill-list li:hover {
     color: var(--color-accent-primary);
+    transform: translateX(10px);
+    text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+/* Tech particles background */
+.skill-category::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.skill-category:hover::after {
+    opacity: 1;
+    animation: techGrid 10s linear infinite;
+}
+
+@keyframes techGrid {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 20px 20px;
+    }
 }
 
 @media (max-width: 768px) {

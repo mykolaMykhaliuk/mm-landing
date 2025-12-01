@@ -8,6 +8,154 @@
     overflow: hidden;
 }
 
+/* Particle Canvas */
+.particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+/* Code Rain Effect (Matrix Style) */
+.code-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+.code-column {
+    position: absolute;
+    top: -100%;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--color-accent-primary);
+    animation: codeRainFall 15s linear infinite;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.code-column span {
+    text-shadow: 0 0 10px currentColor;
+    opacity: 0.7;
+}
+
+@keyframes codeRainFall {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+/* DNA Helix Animation */
+.dna-helix {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    width: 100px;
+    height: 300px;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.helix-strand {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.helix-strand::before,
+.helix-strand::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color-accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--color-accent-primary);
+}
+
+.strand-1 {
+    animation: dnaRotate1 4s ease-in-out infinite;
+}
+
+.strand-2 {
+    animation: dnaRotate2 4s ease-in-out infinite;
+}
+
+@keyframes dnaRotate1 {
+    0%, 100% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(40px) translateY(75px);
+    }
+    50% {
+        transform: translateX(0) translateY(150px);
+    }
+    75% {
+        transform: translateX(-40px) translateY(225px);
+    }
+}
+
+@keyframes dnaRotate2 {
+    0%, 100% {
+        transform: translateX(40px) translateY(0);
+    }
+    25% {
+        transform: translateX(0) translateY(75px);
+    }
+    50% {
+        transform: translateX(40px) translateY(150px);
+    }
+    75% {
+        transform: translateX(80px) translateY(225px);
+    }
+}
+
+/* Circuit Pattern Background */
+.circuit-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.05;
+    background-image:
+        linear-gradient(90deg, var(--color-accent-primary) 1px, transparent 1px),
+        linear-gradient(0deg, var(--color-accent-primary) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: circuitMove 20s linear infinite;
+}
+
+@keyframes circuitMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
 /* Add animated gradient background */
 .hero::before {
     content: '';
@@ -20,17 +168,14 @@
         radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
     animation: gradientShift 10s ease-in-out infinite;
-    z-index: -1;
+    z-index: 0;
 }
 
 @keyframes gradientShift {
-
-    0%,
-    100% {
+    0%, 100% {
         opacity: 1;
         transform: scale(1);
     }
-
     50% {
         opacity: 0.8;
         transform: scale(1.1);
@@ -42,10 +187,87 @@
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-lg);
     align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-text {
     animation: fadeInUp 0.8s ease-out;
+}
+
+/* Glitch Text Effect */
+.glitch-text {
+    position: relative;
+    animation: glitchPulse 8s ease-in-out infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.glitch-text::before {
+    animation: glitch1 3s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translate(-2px, -2px);
+    opacity: 0.8;
+    color: rgba(99, 102, 241, 0.8);
+}
+
+.glitch-text::after {
+    animation: glitch2 2.5s infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    transform: translate(2px, 2px);
+    opacity: 0.8;
+    color: rgba(236, 72, 153, 0.8);
+}
+
+@keyframes glitch1 {
+    0%, 96%, 100% {
+        transform: translate(0, 0);
+    }
+    97% {
+        transform: translate(-4px, 0);
+    }
+    98% {
+        transform: translate(4px, 0);
+    }
+    99% {
+        transform: translate(-4px, 0);
+    }
+}
+
+@keyframes glitch2 {
+    0%, 94%, 100% {
+        transform: translate(0, 0);
+    }
+    95% {
+        transform: translate(3px, 0);
+    }
+    96% {
+        transform: translate(-3px, 0);
+    }
+    97% {
+        transform: translate(3px, 0);
+    }
+}
+
+@keyframes glitchPulse {
+    0%, 90%, 100% {
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    92% {
+        filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.8));
+    }
+    95% {
+        filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.8));
+    }
 }
 
 .hero-greeting {
@@ -90,6 +312,7 @@
     justify-content: center;
 }
 
+/* Holographic Card Effects */
 .floating-card {
     position: absolute;
     background: var(--gradient-glass);
@@ -97,35 +320,338 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.holographic-card {
+    background: linear-gradient(135deg,
+        rgba(99, 102, 241, 0.15) 0%,
+        rgba(139, 92, 246, 0.15) 50%,
+        rgba(236, 72, 153, 0.15) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.holographic-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    animation: holographicShine 3s ease-in-out infinite;
+}
+
+@keyframes holographicShine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(0deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(0deg);
+    }
+}
+
+.holographic-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
+    border-color: rgba(99, 102, 241, 0.5);
 }
 
 .card-1 {
-    width: 300px;
-    height: 200px;
+    width: 320px;
+    height: 220px;
     top: 10%;
     right: 10%;
-    animation: float 6s ease-in-out infinite;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+    animation: float 6s ease-in-out infinite, cardRotate1 10s ease-in-out infinite;
+    padding: 1.5rem;
 }
 
 .card-2 {
-    width: 250px;
-    height: 180px;
+    width: 270px;
+    height: 200px;
     bottom: 20%;
     left: 5%;
-    animation: float 8s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite, cardRotate2 12s ease-in-out infinite;
     animation-delay: 1s;
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-3 {
-    width: 200px;
-    height: 150px;
+    width: 220px;
+    height: 180px;
     top: 50%;
     right: 30%;
-    animation: float 7s ease-in-out infinite;
+    animation: float 7s ease-in-out infinite, cardRotate3 11s ease-in-out infinite;
     animation-delay: 2s;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes cardRotate1 {
+    0%, 100% {
+        transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    }
+    50% {
+        transform: perspective(1000px) rotateY(5deg) rotateX(2deg);
+    }
+}
+
+@keyframes cardRotate2 {
+    0%, 100% {
+        transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    }
+    50% {
+        transform: perspective(1000px) rotateY(-5deg) rotateX(-2deg);
+    }
+}
+
+@keyframes cardRotate3 {
+    0%, 100% {
+        transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    }
+    50% {
+        transform: perspective(1000px) rotateY(3deg) rotateX(3deg);
+    }
+}
+
+/* Code Snippet Styling */
+.code-snippet {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.code-snippet pre {
+    margin: 0;
+}
+
+.code-snippet code {
+    display: block;
+    animation: codeTyping 4s steps(40) infinite;
+}
+
+.code-keyword {
+    color: #ff79c6;
+    font-weight: bold;
+}
+
+.code-function {
+    color: #50fa7b;
+}
+
+.code-operator {
+    color: #8be9fd;
+}
+
+.code-string {
+    color: #f1fa8c;
+}
+
+@keyframes codeTyping {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* AI Brain Animation */
+.ai-brain {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brain-node {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--color-accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--color-accent-primary);
+    animation: nodePulse 2s ease-in-out infinite;
+}
+
+.brain-node:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.brain-node:nth-child(2) {
+    top: 20%;
+    right: 20%;
+    animation-delay: 0.5s;
+}
+
+.brain-node:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 1s;
+}
+
+.brain-node:nth-child(4) {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 1.5s;
+}
+
+@keyframes nodePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+        box-shadow: 0 0 20px var(--color-accent-primary);
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+        box-shadow: 0 0 40px var(--color-accent-primary);
+    }
+}
+
+.brain-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--color-accent-secondary);
+    border-radius: 50%;
+    animation: brainPulseExpand 2s ease-out infinite;
+}
+
+@keyframes brainPulseExpand {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(15);
+        opacity: 0;
+    }
+}
+
+/* Molecule Animation */
+.molecule {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.atom {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--color-accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--color-accent-primary);
+}
+
+.atom-1 {
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: atomOrbit1 4s ease-in-out infinite;
+}
+
+.atom-2 {
+    bottom: 30%;
+    left: 30%;
+    animation: atomOrbit2 4s ease-in-out infinite;
+}
+
+.atom-3 {
+    bottom: 30%;
+    right: 30%;
+    animation: atomOrbit3 4s ease-in-out infinite;
+}
+
+@keyframes atomOrbit1 {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+
+@keyframes atomOrbit2 {
+    0%, 100% {
+        transform: rotate(0deg) translateY(0);
+    }
+    50% {
+        transform: rotate(120deg) translateY(5px);
+    }
+}
+
+@keyframes atomOrbit3 {
+    0%, 100% {
+        transform: rotate(0deg) translateY(0);
+    }
+    50% {
+        transform: rotate(-120deg) translateY(5px);
+    }
+}
+
+.bond {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--color-accent-primary),
+        transparent);
+    transform-origin: left center;
+}
+
+.bond-1 {
+    top: 45%;
+    left: 50%;
+    width: 80px;
+    transform: translateX(-50%) rotate(-30deg);
+    animation: bondGlow 2s ease-in-out infinite;
+}
+
+.bond-2 {
+    top: 55%;
+    left: 35%;
+    width: 70px;
+    transform: rotate(90deg);
+    animation: bondGlow 2s ease-in-out infinite 0.5s;
+}
+
+.bond-3 {
+    top: 55%;
+    right: 35%;
+    width: 70px;
+    transform: rotate(90deg);
+    animation: bondGlow 2s ease-in-out infinite 1s;
+}
+
+@keyframes bondGlow {
+    0%, 100% {
+        opacity: 0.5;
+        box-shadow: 0 0 5px var(--color-accent-primary);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 15px var(--color-accent-primary);
+    }
 }
 
 .scroll-indicator {
